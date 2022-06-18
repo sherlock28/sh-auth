@@ -1,0 +1,37 @@
+{
+  "name": "sh-auth",
+  "version": "1.0.0",
+  "description": "Auth service for Segundo Hogar project",
+  "main": "src/",
+  "scripts": {
+    "dev": "nodemon src/",
+    "start": "node src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sherlock28/sh-auth.git"
+  },
+  "keywords": [
+    "NodeJs",
+    "Hasura",
+    "Auth",
+    "JWT"
+  ],
+  "author": "Rodolfo Caceres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sherlock28/sh-auth/issues"
+  },
+  "homepage": "https://github.com/sherlock28/sh-auth#readme",
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
