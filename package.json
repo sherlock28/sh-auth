@@ -4,8 +4,9 @@
   "description": "Auth service for Segundo Hogar project",
   "main": "src/",
   "scripts": {
-    "dev": "nodemon src/",
-    "start": "node src/"
+    "dev": "ts-node-dev src/",
+    "start": "node build/",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,10 @@
   },
   "homepage": "https://github.com/sherlock28/sh-auth#readme",
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.16"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
