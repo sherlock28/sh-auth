@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-// import { httpStatusCode } from '../const/statusCode';
+// import { HttpStatusCode } from '../const/statusCode';
 
 export const validateData = (_req: Request, _res: Response, next: NextFunction) => {
 

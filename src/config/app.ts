@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { config } from 'dotenv';
-import authRoutes from '../routes/auth.route';
+import { routes } from '../routes';
+import { HttpStatusCode } from '../const/statusCode';
 
 config();
 
@@ -25,9 +26,13 @@ const configureApp = (app: any) => {
 
     // routes
     app.get('/', (_req: Request, res: Response) => {
-        res.send('Auth Service - Segundo Hogar');
+        res.status(HttpStatusCode.OK).json({
+            message: `Auth Service - Segundo Hogar`,
+            version: getApiVersion()
+        });
     });
-    app.use(`/api/${getApiVersion()}/auth`, authRoutes);
+    app.use(`/api/${getApiVersion()}/auth`, routes.authRoutes);
+    app.use(`/api/${getApiVersion()}`, routes.healthRoutes);
 
     return app;
 }

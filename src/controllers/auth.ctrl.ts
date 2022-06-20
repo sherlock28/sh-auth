@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { httpStatusCode } from '../const/statusCode';
+import { HttpStatusCode } from '../const/statusCode';
 
-class UserController {
+class AuthController {
     public async signin(_req: Request, res: Response) {
-        res.status(httpStatusCode.OK).json({ data: 'Hello world', success: true, error: false });
+        res.status(HttpStatusCode.OK).json({ data: 'Hello world', success: true, error: false });
     }
 }
 
-export const userController = new UserController();
+export const authCtrl = new AuthController();
