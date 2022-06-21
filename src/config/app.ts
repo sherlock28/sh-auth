@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
-import morgan from 'morgan';
 import cors from 'cors';
 import { config } from 'dotenv';
 import { routes } from '../routes';
 import { HttpStatusCode } from '../const/statusCode';
+require("./database");
 
 config();
 
@@ -19,7 +19,7 @@ const configureApp = (app: any) => {
 
     // middlewares
     if (process.env.NODE_ENV === "development") {
-        app.use(morgan('dev'));
+        app.use(require("morgan")("dev"));
     }
     app.use(cors());
     app.use(express.json());
