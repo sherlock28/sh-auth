@@ -3,7 +3,7 @@ import { HttpStatusCode } from '../const/statusCode';
 
 const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
 
-export const validateData = (req: Request, res: Response, next: NextFunction) => {
+export const validateRegisterData = (req: Request, res: Response, next: NextFunction) => {
 
     if (!req.body.email) {
         res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'email is required.' });
