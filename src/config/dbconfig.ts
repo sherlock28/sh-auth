@@ -22,5 +22,8 @@ const db_production = {
     password: process.env.PGPASSWORD || "postgres",
 };
 
+
+export default defaultConfig;
+
 export const db_config =
     process.env.NODE_ENV === "production" ? db_production : db_development;
