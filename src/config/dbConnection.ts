@@ -1,5 +1,5 @@
 import defaultConfig, { db_config } from './dbconfig';
-import { Pool, Client } from 'pg';
+import { Pool } from 'pg';
 
 const currentConfig = {
     host: db_config.host || defaultConfig.pghost,

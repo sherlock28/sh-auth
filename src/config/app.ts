@@ -4,8 +4,6 @@ import { config } from 'dotenv';
 import { routes } from '../routes';
 import { HttpStatusCode } from '../const/statusCode';
 config();
-require("./database");
-
 
 const getApiVersion = () => {
     const version = process.env.VERSION ?? 1;
