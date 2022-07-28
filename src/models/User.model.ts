@@ -1,25 +1,32 @@
-import { Schema, model, Document } from 'mongoose';
+import Person from "./Person.model";
 
-export interface IUser extends Document {
+interface IUser {
+    username: string,
     email: string,
     password: string,
-    token: string
+    user_status: boolean;
+    remember_token: string
 }
 
-const UserSchema = new Schema(
-    {
-        email: {type: String, required: true},
-        password: {type: String, required: true},
-        token: {type: String}
-    }, 
-    {
-        toJSON: {
-            transform(_doc, returnedObject) {
-                returnedObject.id = returnedObject._id;
-                delete returnedObject.__v;
-                delete returnedObject.token;
-            },
-        }
-    });
+class User extends Person implements IUser {
 
-export default model<IUser>('User', UserSchema);
+    username: string;
+    email: string;
+    password: string;
+    user_status: boolean;
+    remember_token: string;
+
+    constructor(username: string, email: string, password: string, user_status: boolean,
+        remember_token: string, firstname: string, lastname: string, gender: string,
+        birth_date: Date, phone: string) {
+        super(firstname, lastname, gender,
+            birth_date, phone);
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.user_status = user_status;
+        this.remember_token = remember_token;
+    }
+}
+
+export default User;
