@@ -1,16 +1,8 @@
-import defaultConfig, { db_config } from './dbconfig';
+import { db_config } from './dbconfig';
 import { Pool } from 'pg';
 
-const currentConfig = {
-    host: db_config.host || defaultConfig.pghost,
-    user: db_config.user || defaultConfig.pguser,
-    password: db_config.password || defaultConfig.pgpassword,
-    database: db_config.database || defaultConfig.pgdatabase,
-    port: +db_config.port || +defaultConfig.pgport
-};
-
 async function connect(): Promise<Pool> {
-    return await new Pool(currentConfig);
+    return await new Pool(db_config);
 }
 
 function disconnect(pool: any) {
