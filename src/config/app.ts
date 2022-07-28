@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { config } from 'dotenv';
+import ip from 'ip';
 import { routes } from '../routes';
 import { HttpStatusCode } from '../const/statusCode';
 config();
@@ -14,6 +15,8 @@ const configureApp = (app: any) => {
 
     // settings
     app.set('port', process.env.PORT || 4000);
+    if (process.env.NODE_ENV === "development")
+        process.env.APP_DOMAIN = ip.address() + ":" + process.env.PORT;
 
     // middlewares
     if (process.env.NODE_ENV === "development") {
