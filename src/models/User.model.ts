@@ -1,11 +1,11 @@
 import Person from "./Person.model";
-
 interface IUser {
     username: string,
     email: string,
     password: string,
     user_status: boolean;
     remember_token: string
+    user_category: number
 }
 
 class User extends Person implements IUser {
@@ -15,9 +15,10 @@ class User extends Person implements IUser {
     password: string;
     user_status: boolean;
     remember_token: string;
+    user_category: number;
 
     constructor(username: string, email: string, password: string, user_status: boolean,
-        remember_token: string, firstname: string, lastname: string, gender: string,
+        remember_token: string, user_category: number, firstname: string, lastname: string, gender: string,
         birth_date: Date, phone: string) {
         super(firstname, lastname, gender,
             birth_date, phone);
@@ -26,6 +27,7 @@ class User extends Person implements IUser {
         this.password = password;
         this.user_status = user_status;
         this.remember_token = remember_token;
+        this.user_category = user_category;
     }
 }
 

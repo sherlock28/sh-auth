@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/sherlock28/sh-auth#readme",
   "devDependencies": {
+    "@types/bcryptjs": "2.4.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/ip": "1.1.0",
