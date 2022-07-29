@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS sh;
+
 CREATE TABLE IF NOT EXISTS "sh".user_categories (
    "id" SERIAL PRIMARY KEY,
    "descripcion" varchar(255) NOT NULL, 
