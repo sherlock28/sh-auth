@@ -1,25 +1,25 @@
+require('dotenv').config();
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { config } from 'dotenv';
 import ip from 'ip';
 import { routes } from '../routes';
 import { HttpStatusCode } from '../const/statusCode';
-config();
+import { env } from "./env";
 
 const getApiVersion = () => {
-    const version = process.env.VERSION ?? 1;
+    const version = env.VERSION ?? 1;
     return `V${version}`;
 }
 
 const configureApp = (app: any) => {
 
     // settings
-    app.set('port', process.env.PORT || 4000);
-    if (process.env.NODE_ENV === "development")
-        process.env.APP_DOMAIN = ip.address() + ":" + process.env.PORT;
+    app.set('port', env.PORT || 4000);
+    if (env.NODE_ENV === "development")
+        env.APP_DOMAIN = ip.address() + ":" + env.PORT;
 
     // middlewares
-    if (process.env.NODE_ENV === "development") {
+    if (env.NODE_ENV === "development") {
         app.use(require("morgan")("dev"));
     }
     app.use(cors());
