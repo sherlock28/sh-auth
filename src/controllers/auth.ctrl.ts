@@ -8,9 +8,9 @@ class AuthController {
 
     const { username } = req.body;
 
-    const users = await getUser({ username });
-
-    const { id, email } = users.sh_users.at(0);
+    const user = await getUser({ username });
+    
+    const { id, email } = user.sh_users.at(0);
 
     const token = generateToken({ id, username, email });
 

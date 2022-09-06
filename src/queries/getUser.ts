@@ -10,6 +10,9 @@ async function fetchUser(username: string) {
                 email
                 password
                 user_categories_id
+                user_category {
+                    descripcion
+                }
                 user_status
                 username
             }
