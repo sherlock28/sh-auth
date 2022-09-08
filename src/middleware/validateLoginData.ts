@@ -15,8 +15,7 @@ export const validateLoginData = (req: Request, res: Response, next: NextFunctio
     }
 
     if (req.body.email?.toString().match(emailRegex) === null) {
-        res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: 'invalid email.', error: 'invalid format email.' }));
-        return;
+        return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: 'invalid email.', error: 'invalid format email.' }));
     }
 
     if (req.body.password === undefined || req.body.password.length == 0) {

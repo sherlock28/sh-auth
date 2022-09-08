@@ -6,30 +6,25 @@ const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\")
 export const validateRegisterData = (req: Request, res: Response, next: NextFunction) => {
 
     if (!req.body.email) {
-        res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'email is required.' });
-        return;
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'email is required.' });
     }
 
     if (!req.body.password) {
-        res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'password is required.' });
-        return;
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'password is required.' });
     }
 
     let { email, password } = req.body;
 
     if (email.length == 0) {
-        res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'email is required.' });
-        return;
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'email is required.' });
     }
 
     if (req.body.email.toString().match(emailRegex) === null) {
-        res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'invalid email.' });
-        return;
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'invalid email.' });
     }
 
     if (password.length == 0) {
-        res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'password is required.' });
-        return;
+        return res.status(HttpStatusCode.BAD_REQUEST).json({ error: 'password is required.' });
     }
 
     return next();
