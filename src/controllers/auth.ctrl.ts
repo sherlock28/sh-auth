@@ -10,6 +10,8 @@ class AuthController {
 
     const user = await getUser({ username });
     
+    if(!user) return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: "something went wrong.", error: "" }));
+
     const { id, email } = user.sh_users.at(0);
 
     const token = generateToken({ id, username, email });
