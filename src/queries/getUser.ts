@@ -1,11 +1,13 @@
 import fetch from "node-fetch";
 import { env } from "../config/env";
 
-async function fetchUser(username: string) {
+async function fetchUser(query: any) {
+
+    const condition = `where: {${query.column}: {_eq: "${query.value}"}}`;
 
     const GET_USER_QUERY = `
         query GetUserQL {
-            sh_users(where: {username: {_eq: "${username}"}}) {
+            sh_users(${condition}) {
                 id
                 email
                 password
@@ -28,12 +30,14 @@ async function fetchUser(username: string) {
         }
     );
 
-    return await result.json();
+    const user = await result.json();
+
+    return user;
 }
 
 
-export async function getUser(args: { username: string }) {
-    const response: any = await fetchUser(args.username);
+export async function getUser(query: any) {
+    const response: any = await fetchUser(query);
 
     if (response.errors) {
         console.error(response.errors);

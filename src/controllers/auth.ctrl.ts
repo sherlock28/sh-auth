@@ -6,13 +6,16 @@ import { getUser } from "../queries";
 class AuthController {
   public async signin(req: Request, res: Response) {
 
-    const { username } = req.body;
-
-    const user = await getUser({ username });
+    const usernameQL = req.body?.username;
+    const emailQL = req.body?.email;
     
-    if(!user) return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: "something went wrong.", error: "" }));
+    const query = usernameQL ? { value: usernameQL, column: 'username' } : { value: emailQL, column: 'email' };
 
-    const { id, email } = user.sh_users.at(0);
+    const user = await getUser(query);
+
+    if (!user) return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: "something went wrong.", error: "" }));
+
+    const { id, email, username } = user.sh_users.at(0);
 
     const token = generateToken({ id, username, email });
 
