@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  sh-auth:
+    build:
+      context: .
+      target: prod
+    container_name: sh-auth
+    restart: always
+    ports:
+      - 4000:80
+    networks:
+      - default
+      - sh-network
+    external_links:
+      - hasura
+
+networks:
+  sh-network:
+    external: true
