@@ -20,7 +20,7 @@ class AuthController {
     const isCorrectPass = await validatePassword(req.body.password, password);
 
     if (!isCorrectPass) return res.status(HttpStatusCode.FORBIDDEN).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
-    
+
     const token = generateToken({ id, username, email, user_category });
 
     return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
