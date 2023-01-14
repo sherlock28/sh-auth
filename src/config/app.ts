@@ -19,9 +19,7 @@ const configureApp = (app: any) => {
         env.APP_DOMAIN = ip.address() + ":" + env.PORT;
 
     // middlewares
-    if (env.NODE_ENV === "development") {
-        app.use(require("morgan")("dev"));
-    }
+    app.use(require("morgan")("short"));
     app.use(cors());
     app.use(express.json());
 
