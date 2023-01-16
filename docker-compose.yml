@@ -7,7 +7,7 @@ services:
     container_name: sh-auth
     restart: always
     ports:
-      - 4000:80
+      - 4000:4000
     networks:
       - default
       - sh-network
