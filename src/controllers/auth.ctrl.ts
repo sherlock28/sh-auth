@@ -13,13 +13,13 @@ class AuthController {
 
     const user = await getUser(queryCondition);
 
-    if (user.sh_users.length === 0) return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
+    if (user.sh_users.length === 0) return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
 
     const { id, email, username, password, user_category } = user.sh_users.at(0);
 
     const isCorrectPass = await validatePassword(req.body.password, password);
 
-    if (!isCorrectPass) return res.status(HttpStatusCode.FORBIDDEN).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
+    if (!isCorrectPass) return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
 
     const token = generateToken({ id, username, email, user_category });
 
