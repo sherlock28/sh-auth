@@ -25,6 +25,23 @@ class AuthController {
 
     return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
   }
+
+	public async socialsignin(req: Request, res: Response) {
+
+    const emailQL = req.body?.email;
+
+    const queryCondition = { value: emailQL, column: 'email' };
+
+    const user = await getUser(queryCondition);
+
+    if (user.sh_users.length === 0) return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
+
+    const { id, email, username, user_category } = user.sh_users.at(0);
+
+    const token = generateToken({ id, username, email, user_category });
+
+    return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
+  }
 }
 
 export const authCtrl = new AuthController();
