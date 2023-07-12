@@ -1,0 +1,4 @@
+export const USER_CATEGORY = {
+	UNDEFINED_USER_CATEGORY: -1,
+	DEFAULT_USER_CATEGORY: "default"
+}
