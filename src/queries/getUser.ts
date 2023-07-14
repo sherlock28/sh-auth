@@ -1,11 +1,14 @@
 import fetch from "node-fetch";
 import { env } from "../config/env";
+import logger from '../config/logger';
 
 async function fetchUser(queryCondition: any) {
 
-    const condition = `where: {${queryCondition.column}: {_eq: "${queryCondition.value}"}, _and: {user_status: {_eq: true}}}`;
+	try {
 
-    const GET_USER_QUERY = `
+		const condition = `where: {${queryCondition.column}: {_eq: "${queryCondition.value}"}, _and: {user_status: {_eq: true}}}`;
+
+		const GET_USER_QUERY = `
         query GetUserQL {
             sh_users(${condition}) {
                 id
@@ -21,27 +24,32 @@ async function fetchUser(queryCondition: any) {
         }
     `;
 
-    const result = await fetch(
-        env.GRAPHQL_ENDPOINT,
-        {
-            method: "POST",
-            body: JSON.stringify({ query: GET_USER_QUERY }),
-            headers: { "x-hasura-admin-secret": env.X_HASURA_ADMIN_SECRET }
-        }
-    );
+		const result = await fetch(
+			env.GRAPHQL_ENDPOINT,
+			{
+				method: "POST",
+				body: JSON.stringify({ query: GET_USER_QUERY }),
+				headers: { "x-hasura-admin-secret": env.X_HASURA_ADMIN_SECRET }
+			}
+		);
 
-    const user = await result.json();
+		if (result === undefined || result === null) {
+			return { user: null, message: "Couldn't connect to hasura" };
+		}
 
-    return user;
+		const user = await result.json();
+
+		return { user, message: "" };
+
+	} catch (err) {
+		logger.error("Couldn't connect to hasura")
+		return { user: null, message: "Couldn't connect to hasura" };
+	}
 }
 
 
 export async function getUser(queryCondition: any) {
-    const response: any = await fetchUser(queryCondition);
-
-    if (response.errors) {
-        console.error(response.errors);
-    }
-
-    return response.data;
+	const response: any = await fetchUser(queryCondition);
+	const data = response.user?.data ?? null;
+	return { data, message: response.message};
 }

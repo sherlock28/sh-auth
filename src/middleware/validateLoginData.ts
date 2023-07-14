@@ -27,12 +27,12 @@ export const validateLoginData = (req: Request, res: Response, next: NextFunctio
 
 export const validateSocialLoginData = (req: Request, res: Response, next: NextFunction) => {
 
-    if (req.body.email === undefined) {
-        return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: 'email are missing.', error: 'email are required.' }));
+	if (req.body.email === undefined && req.body.username === undefined) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: 'email or username are missing.', error: 'email or username are required.' }));
     }
 
-    if (req.body.email?.length === 0) {
-        return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: 'email are missing.', error: 'email are required.' }));
+    if (req.body.email?.length === 0 && req.body.username?.length === 0) {
+        return res.status(HttpStatusCode.BAD_REQUEST).json(serviceResponse({ data: null, success: false, message: 'email or username are missing.', error: 'email or username are required.' }));
     }
 
     if (req.body.email?.toString().match(emailRegex) === null) {

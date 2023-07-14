@@ -4,44 +4,54 @@ import { generateToken, serviceResponse, validatePassword } from "../libs";
 import { getUser } from "../queries";
 
 class AuthController {
-  public async signin(req: Request, res: Response) {
+	public async signin(req: Request, res: Response) {
 
-    const usernameQL = req.body?.username;
-    const emailQL = req.body?.email;
+		const usernameQL = req.body?.username;
+		const emailQL = req.body?.email;
 
-    const queryCondition = usernameQL ? { value: usernameQL, column: 'username' } : { value: emailQL, column: 'email' };
+		const queryCondition = usernameQL ? { value: usernameQL, column: 'username' } : { value: emailQL, column: 'email' };
 
-    const user = await getUser(queryCondition);
+		const { data, message } = await getUser(queryCondition);
 
-    if (user.sh_users.length === 0) return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
+		if (data?.sh_users === null || data == undefined)
+			return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(serviceResponse({ data: null, success: false, message: "Couldn't get user.", error: `${message}` }));
 
-    const { id, email, username, password, user_category } = user.sh_users.at(0);
+		if (data?.sh_users.length === 0)
+			return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
 
-    const isCorrectPass = await validatePassword(req.body.password, password);
+		const { id, email, username, password, user_category } = data.sh_users.at(0);
 
-    if (!isCorrectPass) return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
+		const isCorrectPass = await validatePassword(req.body.password, password);
 
-    const token = generateToken({ id, username, email, user_category });
+		if (!isCorrectPass)
+			return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
 
-    return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
-  }
+		const token = generateToken({ id, username, email, user_category });
+
+		return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
+	}
 
 	public async socialsignin(req: Request, res: Response) {
 
-    const emailQL = req.body?.email;
+		const usernameQL = req.body?.username;
+		const emailQL = req.body?.email;
 
-    const queryCondition = { value: emailQL, column: 'email' };
+		const queryCondition = usernameQL ? { value: usernameQL, column: 'username' } : { value: emailQL, column: 'email' };
 
-    const user = await getUser(queryCondition);
+		const { data, message } = await getUser(queryCondition);
 
-    if (user.sh_users.length === 0) return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
+		if (data?.sh_users === null || data == undefined)
+			return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json(serviceResponse({ data: null, success: false, message: "Couldn't get user.", error: `${message}` }));
 
-    const { id, email, username, user_category } = user.sh_users.at(0);
+		if (data?.sh_users.length === 0)
+			return res.status(HttpStatusCode.UNAUTHORIZED).json(serviceResponse({ data: null, success: true, message: "Invalid credentials.", error: "" }));
 
-    const token = generateToken({ id, username, email, user_category });
+		const { id, email, username, user_category } = data?.sh_users.at(0);
 
-    return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
-  }
+		const token = generateToken({ id, username, email, user_category });
+
+		return res.status(HttpStatusCode.OK).json(serviceResponse({ data: token, success: true, message: "user logged successfully", error: null }));
+	}
 }
 
 export const authCtrl = new AuthController();
