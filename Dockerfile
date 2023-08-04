@@ -1,4 +1,4 @@
-FROM node:16-alpine as dev
+FROM node:18-alpine as dev
 WORKDIR /usr
 COPY package*.json ./
 COPY tsconfig.json ./
@@ -8,7 +8,7 @@ RUN ls -a && npm ci
 EXPOSE 4000
 CMD ["npm","run","dev"]
 
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 WORKDIR /usr
 COPY package*.json ./
 COPY tsconfig.json ./
@@ -16,7 +16,7 @@ COPY .env ./
 COPY src ./src
 RUN ls -a && npm ci && npm run build
 
-FROM node:16-alpine as prod
+FROM node:18-alpine as prod
 WORKDIR /usr
 COPY package.json ./
 COPY .env ./
