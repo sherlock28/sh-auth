@@ -16,6 +16,7 @@ async function fetchUser(queryCondition: any) {
                 email
                 password
                 user_status
+				created_with_sn
                 user_category {
                     id
                     description
